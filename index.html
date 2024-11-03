@@ -11,7 +11,9 @@
     />
   </head>
   <body>
-    <div class="container mt-5 border-black border rounded-3 p-5 w-50">
+    <div
+      class="container mt-5 bg-body-tertiary border-black border rounded-3 p-5 w-50"
+    >
       <h2>Task Details</h2>
       <hr />
       <form id="taskForm">
@@ -22,7 +24,7 @@
             type="text"
             class="form-control"
             id="displayName"
-            placeholder="Enter Display Name"
+            placeholder="Enter display name..."
             required
           />
         </div>
@@ -35,7 +37,7 @@
               type="number"
               class="form-control"
               id="segments"
-              placeholder="Enter Number of Segments"
+              placeholder="Enter number of segments..."
               required
             />
           </div>
@@ -50,13 +52,69 @@
             </select>
           </div>
         </div>
-
-        <div class="btn-group gap-2">
-          <!-- Submit Button -->
-          <button type="submit" class="btn btn-primary">Push to queue</button>
-          <button type="" class="btn btn-warning">Valuate queue</button>
-        </div>
+        <button type="submit" class="btn btn-primary">Push to queue</button>
       </form>
+    </div>
+
+    <div
+      class="container mt-5 bg-body-tertiary border-black border rounded-3 p-5 w-50"
+    >
+      <h2>Queue overview</h2>
+      <hr />
+      <div>
+        <div class="row p-2">
+          <div class="col col-6">
+            <label for="">Number of cores</label>
+            <input type="number" min="1" max="4" />
+          </div>
+          <div class="col col-6">
+            <label for="">Segment time</label>
+            <input type="number" min="1" max="9" step="1" />
+          </div>
+        </div>
+        <div class="row p-2">
+          <div class="col col-6">Total number of tasks: 8</div>
+          <div class="col col-6">Estimated execution time: 22ms</div>
+          <div class="col col-6">Total number of segments: 40</div>
+          <div class="col col-6">Median segments per core: 20</div>
+        </div>
+      </div>
+      <div class="queueItem">
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+              >
+                Accordion Item #1
+              </button>
+            </h2>
+            <div
+              id="collapseOne"
+              class="accordion-collapse collapse show"
+              data-bs-parent="#accordionExample"
+            >
+              <div class="accordion-body">
+                <strong>This is the first item's accordion body.</strong> It is
+                shown by default, until the collapse plugin adds the appropriate
+                classes that we use to style each element. These classes control
+                the overall appearance, as well as the showing and hiding via
+                CSS transitions. You can modify any of this with custom CSS or
+                overriding our default variables. It's also worth noting that
+                just about any HTML can go within the
+                <code>.accordion-body</code>, though the transition does limit
+                overflow.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="" class="btn btn-warning mt-3">Valuate queue</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
