@@ -1,4 +1,4 @@
-var status = Object.freeze({
+export const status = Object.freeze({
   Idle: "Idle",
   Delayed: "Delayed",
   Submitted: "Submitted",
