@@ -1,4 +1,4 @@
-class Task {
+export default class Task {
   constructor(id, segments, priority, delay, flag, displayName) {
     this.id = id;
     this.segments = segments;

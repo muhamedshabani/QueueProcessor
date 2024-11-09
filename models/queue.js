@@ -1,4 +1,4 @@
-class Queue {
+export default class Queue {
   constructor(id, displayName) {
     this.id = id;
     this.displayName = displayName;
