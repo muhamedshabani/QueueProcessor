@@ -30,7 +30,9 @@
       <span
         >This is where you push tasks into queue. <br />
         To push a task into queue, fill the form and press
-        <code class="btn btn-outline-primary btn-sm">Push to queue</code>
+        <code class="btn disabled btn-outline-primary btn-sm"
+          >Push to queue</code
+        >
         button</span
       >
       <hr />
@@ -164,13 +166,18 @@
               data-bs-parent="#accordionExample"
             >
               <div class="accordion-body">
-                <div id="queueOverviewTasks"></div>
+                <div id="queueOverviewTasks">No tasks in queue</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-warning mt-3">Valuate queue</button>
+      <button id="valuateQueueButton" class="btn btn-warning mt-3">
+        Valuate queue
+      </button>
+      <button id="clearQueueButton" class="btn btn-outline-danger mt-3">
+        Clear queue
+      </button>
     </div>
 
     <div
@@ -197,11 +204,17 @@
             class="accordion-collapse collapse show"
             data-bs-parent="#valuatedQueueAccordion"
           >
-            <div class="accordion-body">List of tasks here</div>
+            <div id="valuatedQueueTasks" class="accordion-body">
+              Queue not valuated yet
+            </div>
           </div>
         </div>
       </div>
-      <button disabled class="btn btn-outline-warning" id="executeQueueButton">
+      <button
+        disabled
+        class="btn btn-outline-warning my-3"
+        id="executeQueueButton"
+      >
         Not Ready
       </button>
     </div>

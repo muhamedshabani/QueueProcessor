@@ -18,7 +18,7 @@ export default class Queue {
     if (index !== -1) {
       const removedTask = this.tasks.splice(index, 1)[0];
       console.log(
-        `Removed Task: ${removedTask.DisplayName} (ID: ${removedTask.Id})`
+        `Removed Task: ${removedTask.displayName} (ID: ${removedTask.Id})`
       );
     } else {
       console.log(`No task found with ID: ${taskId}`);
