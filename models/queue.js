@@ -6,11 +6,17 @@ export default class Queue {
   }
 
   addTask(task) {
-    if (task instanceof Task) {
+    this.tasks.push(task);
+  }
+
+  addBulkTasks(tasks) {
+    tasks.forEach((task) => {
       this.tasks.push(task);
-    } else {
-      console.log("Only instances of Task can be added.");
-    }
+    });
+  }
+
+  clearTasks() {
+    this.tasks = [];
   }
 
   removeTask(taskId) {

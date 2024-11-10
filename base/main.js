@@ -4,14 +4,17 @@ import Task from "../models/task.js";
 import { generateGUID } from "../utils/guidGenerator.js";
 import { clearValues } from "../utils/clearValues.js";
 import { taskElement } from "../utils/taskElement.js";
+import { valuate } from "../base/dispatchers/valuation.js";
 import { refreshQueueInfo } from "../utils/refreshQueueInfo.js";
 import { settings } from "../base/settings.js";
 //#endregion
 
-//#region: Initial state variables
+//#region: Initial state
 var tasks = [];
 const segmentTime = settings.segmentTime;
 const queueOverviewTasks = document.getElementById("queueOverviewTasks");
+const executionMethod = settings.executionMethod;
+document.getElementById("currentAlgorithm").innerHTML = executionMethod;
 var queue = new Queue();
 //#endregion
 
@@ -27,10 +30,7 @@ pushToQueueButton.addEventListener("click", (event) => {
 
   let task = new Task();
   task.id = guid;
-  task.displayName =
-    taskDisplayName.value !== undefined && taskDisplayName.value !== ""
-      ? taskDisplayName.value
-      : "Task " + guid.slice(0, 5);
+  task.displayName = taskDisplayName.value;
   task.segments = taskSegments.value;
   task.priority = taskPriority.value;
   tasks.push(task);
@@ -41,7 +41,7 @@ pushToQueueButton.addEventListener("click", (event) => {
     ? ""
     : queueOverviewTasks.innerHTML;
   queueOverviewTasks.innerHTML += taskElement(task);
-  clearValues(taskDisplayName, taskSegments, taskPriority);
+  clearValues(taskDisplayName, taskSegments);
   refreshQueueInfo(tasks, segmentTime ?? 1);
 });
 
@@ -52,7 +52,23 @@ clearQueueButton.addEventListener("click", (event) => {
   console.log("Clearing queue");
   tasks = [];
   queueOverviewTasks.innerHTML = "No tasks in queue";
+  refreshQueueInfo(tasks, segmentTime ?? 1);
 });
 
-const executionMethodInput = document.getElementById("executionMethodInput");
-const executionMethod = executionMethodInput.value;
+// Process: Valuate queue
+const valuateQueueButton = document.getElementById("valuateQueueButton");
+valuateQueueButton.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  if (tasks.length == 0) {
+    return;
+  }
+
+  console.log("Valuating queue");
+  if (executionMethod == settings.executionMethod) {
+    tasks.sort((a, b) => a.priority - b.priority);
+    queue.clearTasks();
+    queue.addBulkTasks(tasks);
+    console.log(queue);
+  }
+});

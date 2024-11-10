@@ -1,6 +1,9 @@
 import { status } from "../../models/enums/status";
 
-function attachStatus(task, status) {
-  if (this.status == status.Idle) {
+export function attachStatus(task, newStatus) {
+  if (Object.values(status).includes(newStatus)) {
+    task.status = newStatus;
+  } else {
+    console.error("Invalid status provided");
   }
 }

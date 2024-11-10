@@ -1,6 +1,12 @@
+const executionMethods = Object.freeze({
+  FCFS: "FCFS",
+  PRIORITY: "Priority",
+  RR: "Round-Robin",
+});
+
 const config = {
-  executionMethod: "FCFS",
-  valuationAllowance: 30,
+  executionMethod: executionMethods.PRIORITY,
+  valuationAllowance: 0,
   segmentTime: 1,
 };
 

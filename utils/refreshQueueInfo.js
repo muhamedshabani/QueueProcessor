@@ -12,12 +12,12 @@ export function refreshQueueInfo(tasks, segmentTime) {
 
   const numberOfTasks = tasks.length;
   const totalNumberOfSegments = tasks.reduce(
-    (total, task) => total + task.segments,
+    (total, task) => total + +task.segments,
     0
   );
   const estimatedExecutionTime = totalNumberOfSegments * segmentTime;
   const medianSegmentsPerTask = calculateMedian(
-    tasks.map((task) => task.segments)
+    tasks.map((task) => +task.segments)
   );
 
   console.log(numberOfTasks);
