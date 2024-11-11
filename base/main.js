@@ -66,7 +66,7 @@ valuateQueueButton.addEventListener("click", (event) => {
 
   console.log("Valuating queue");
   if (executionMethod == settings.executionMethod) {
-    tasks.sort((a, b) => a.priority - b.priority);
+    tasks.sort((a, b) => a.getPriorityNumber() - b.getPriorityNumber());
     queue.clearTasks();
     queue.addBulkTasks(tasks);
     console.log(queue);

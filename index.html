@@ -169,7 +169,7 @@
                 aria-expanded="true"
                 aria-controls="collapseOne"
               >
-                <i class="fa-solid fa-list-check"></i> &nbsp; View tasks
+                <i class="fa-solid fa-list-check"></i> &nbsp; Task list
               </button>
             </h2>
             <div
@@ -208,7 +208,8 @@
               aria-expanded="true"
               aria-controls="collapseTwo"
             >
-              View tasks
+              <i class="fa-solid fa-list-check text-success"></i> &nbsp;
+              Valuated queue task list
             </button>
           </h2>
           <div
@@ -217,7 +218,7 @@
             data-bs-parent="#valuatedQueueAccordion"
           >
             <div id="valuatedQueueTasks" class="accordion-body">
-              Queue not valuated yet
+              <div id="queueValuatedTasks">Queue not valuated yet</div>
             </div>
           </div>
         </div>
@@ -231,6 +232,14 @@
       </button>
     </div>
 
+    <footer class="p-2 mt-4 bg-white">
+      <h5 class="text-muted text-center display-5 fs-5">
+        Author: Muhamed Shaban &nbsp;
+        <a class="text-decoration-none" href="https://github.com/muhamedshabani"
+          ><i class="fa-brands fa-github text-dark"></i
+        ></a>
+      </h5>
+    </footer>
     <script src="base/main.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>

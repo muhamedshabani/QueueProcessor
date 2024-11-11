@@ -1,3 +1,5 @@
+import { priorities } from "./enums/priority.js";
+
 export default class Task {
   constructor(id, segments, priority, delay, flag, displayName) {
     this.id = id;
@@ -10,5 +12,9 @@ export default class Task {
 
   getTaskDetails() {
     return `Task (ID: ${this.id}): ${this.displayName}, Priority: ${this.priority}, Flag: (${this.flag})`;
+  }
+
+  getPriorityNumber() {
+    return priorities[this.priority] || 0;
   }
 }
