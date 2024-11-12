@@ -33,7 +33,7 @@ pushToQueueButton.addEventListener("click", (event) => {
   let task = new Task();
   task.id = guid;
   task.displayName = taskDisplayName.value;
-  task.segments = +taskSegments.value > 0 ? +taskSegments.valuate : 1;
+  task.segments = +taskSegments.value > 0 ? +taskSegments.value : 1;
   task.priority = taskPriority.value;
   tasks.push(task);
 
@@ -42,7 +42,7 @@ pushToQueueButton.addEventListener("click", (event) => {
   )
     ? ""
     : queueOverviewTasks.innerHTML;
-  queueOverviewTasks.innerHTML += taskElement(task);
+  queueOverviewTasks.innerHTML += taskElement(task, false);
   clearValues(taskDisplayName, taskSegments);
   refreshQueueInfo(tasks, segmentTime ?? 1);
 });
@@ -92,7 +92,7 @@ const addBulkTasksElement = async (tasks) => {
 
   queueValuatedTasks.innerHTML = "";
   for (const task of tasks) {
-    queueValuatedTasks.innerHTML += taskElement(task);
+    queueValuatedTasks.innerHTML += taskElement(task, true);
     if (tasks.indexOf(task) !== tasks.length - 1) {
       await new Promise((resolve) => setTimeout(resolve, 100 * task.segments));
     }

@@ -179,12 +179,20 @@
             >
               <div class="accordion-body">
                 <table
-                  class="table table-hover table-bordered table-light"
-                  id="queueOverviewTasks"
+                  class="table table-hover table-bordered table-striped table-primary rounded-1 overflow-hidden"
                 >
-                  <caption>
-                    No tasks in queue
-                  </caption>
+                  <thead>
+                    <th>Task</th>
+                    <th>Segments</th>
+                    <th>Priority</th>
+                  </thead>
+                  <tbody id="queueOverviewTasks">
+                    <tr>
+                      <td class="text-center" colspan="3">
+                        No tasks in queue yet!
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -215,8 +223,8 @@
               aria-expanded="true"
               aria-controls="collapseTwo"
             >
-              <i class="fa-solid fa-list-check text-success"></i> &nbsp;
-              Valuated queue task list
+              <i class="fa-solid fa-list-check"></i> &nbsp; Valuated queue task
+              list
             </button>
           </h2>
           <div
@@ -226,12 +234,22 @@
           >
             <div id="valuatedQueueTasks" class="accordion-body">
               <table
-                class="table table-hover table-bordered table-light"
-                id="queueValuatedTasks"
+                class="table table-hover table-bordered table-striped table-primary rounded-1 overflow-hidden"
               >
-                <caption>
-                  Queue not valuated yet
-                </caption>
+                <thead>
+                  <th>Task</th>
+                  <th>Segments</th>
+                  <th>Priority</th>
+                  <th>Execution time</th>
+                  <th>Flag</th>
+                </thead>
+                <tbody id="queueValuatedTasks">
+                  <tr>
+                    <td class="text-center" colspan="5">
+                      Queue not valuated yet!
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
