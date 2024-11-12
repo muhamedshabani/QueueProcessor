@@ -9,3 +9,15 @@ body {
   overflow-y: scroll !important;
   overflow-x: hidden !important;
 }
+
+table {
+  border-radius: 5px !important;
+}
+
+tr:first-child {
+  border-radius: 5px 5px 0px 0px !important;
+}
+
+tr:last-child {
+  border-radius: 0px 0px 5px 5px !important;
+}

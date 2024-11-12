@@ -59,6 +59,7 @@
               class="form-control"
               id="segments"
               placeholder="Enter number of segments..."
+              min="1"
               required
             />
           </div>
@@ -78,7 +79,6 @@
         </button>
       </form>
     </div>
-
     <div
       class="container mt-5 bg-body-tertiary border-black border rounded-3 p-5 w-50"
     >
@@ -178,7 +178,14 @@
               data-bs-parent="#accordionExample"
             >
               <div class="accordion-body">
-                <div id="queueOverviewTasks">No tasks in queue</div>
+                <table
+                  class="table table-hover table-bordered table-light"
+                  id="queueOverviewTasks"
+                >
+                  <caption>
+                    No tasks in queue
+                  </caption>
+                </table>
               </div>
             </div>
           </div>
@@ -218,7 +225,14 @@
             data-bs-parent="#valuatedQueueAccordion"
           >
             <div id="valuatedQueueTasks" class="accordion-body">
-              <div id="queueValuatedTasks">Queue not valuated yet</div>
+              <table
+                class="table table-hover table-bordered table-light"
+                id="queueValuatedTasks"
+              >
+                <caption>
+                  Queue not valuated yet
+                </caption>
+              </table>
             </div>
           </div>
         </div>

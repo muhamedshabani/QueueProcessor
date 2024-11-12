@@ -1,8 +1,16 @@
-import { settings } from "../settings.js";
+const passesPriority = (current, next, allowance) => {
+  if (allowance == undefined) {
+    return +current.priority > +next.priority;
+  } else {
+    return +current.priority > +next.priority &&
+      next.segments / current.segments < 1 - allowance / 100
+      ? true
+      : false;
+  }
+};
 
 // This function is used to valuate tasks based on their priority
 export function valuate(current, next) {
-  console.log(typeof current.priority);
   if (passesPriority(current, next)) {
     return true;
   }
@@ -10,8 +18,11 @@ export function valuate(current, next) {
   return false;
 }
 
-const passesPriority = (current, next) => +current.priority > +next.priority;
+// This function is used to valuate tasks based on priority and allowance
+export function valuateAllowance(current, next, allowance) {
+  if (passesPriority(current, next, allowance)) {
+    return true;
+  }
 
-const passesAllowance = (current, next, allowance) =>
-  +current.priority > +next.priority &&
-  +current.segments / +next.segments / 100 > allowance;
+  return false;
+}

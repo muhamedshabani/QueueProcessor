@@ -1,13 +1,14 @@
-const executionMethods = Object.freeze({
+export const executionMethods = Object.freeze({
   FCFS: "FCFS",
   PRIORITY: "Priority",
-  RR: "Round-Robin",
+  ALLOWANCE: "Allowance",
 });
 
 const config = {
   executionMethod: executionMethods.PRIORITY,
-  valuationAllowance: 0,
+  valuationAllowance: 20,
   segmentTime: 1,
+  roundRobinSegments: 4,
 };
 
 export const settings = Object.freeze({
