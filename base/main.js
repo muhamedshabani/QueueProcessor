@@ -8,6 +8,8 @@ import { valuate, valuateAllowance } from "../base/dispatchers/valuation.js";
 import { refreshQueueInfo } from "../utils/refreshQueueInfo.js";
 import { settings } from "../base/settings.js";
 import { executionMethods } from "../base/settings.js";
+import { attachFlag } from "../base/dispatchers/flagging.js";
+import { status } from "../models/enums/status.js";
 //#endregion
 
 //#region: Initial state
@@ -92,6 +94,7 @@ const addBulkTasksElement = async (tasks) => {
 
   queueValuatedTasks.innerHTML = "";
   for (const task of tasks) {
+    attachFlag(task, status.Idle);
     queueValuatedTasks.innerHTML += taskElement(task, true);
     if (tasks.indexOf(task) !== tasks.length - 1) {
       await new Promise((resolve) => setTimeout(resolve, 100 * task.segments));

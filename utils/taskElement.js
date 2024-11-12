@@ -1,13 +1,11 @@
 export function taskElement(task, displayAll) {
-  const { displayName, segments, priority } = task;
+  const { displayName, segments, priority, flag, delay } = task;
   const taskElement = `
     <tr>
-       <td>Task: ${displayName}</td>
-       <td>Segments: ${segments}</td>
-       <td>Priority: ${priority}</td>
-       ${
-         displayAll ? `<td>Flag: ${task.flag}</td><td>Delay: ${task.delay}` : ""
-       }
+       <td>${displayName}</td>
+       <td>${segments}</td>
+       <td>${priority}</td>
+       ${displayAll ? `<td>${flag}</td><td>${delay}` : ""}
     </tr>`;
   return taskElement;
 }
