@@ -20,7 +20,7 @@
   <body>
     <div class="bg-body-tertiary">
       <div class="container p-2">
-        <h1 class="display-6 text-center">Task queue processing simulator</h1>
+        <h1 class="display-6 text-center">Task processing queue simulator</h1>
       </div>
     </div>
     <div
@@ -97,51 +97,6 @@
       </span>
       <hr />
       <div>
-        <!-- <div class="row p-2">
-          <div class="col col-4 d-flex flex-column justify-content-center">
-            <div class="container w-100 p-2">
-              <label>Allowance</label>
-              <br />
-              <input
-                id="allowanceInput"
-                class="form-control"
-                type="number"
-                min="0"
-                max="100"
-                step="10"
-              />
-            </div>
-          </div>
-          <div class="col col-4">
-            <div class="container w-100 p-2">
-              <label>Segment time (ms)</label>
-              <br />
-              <input
-                id="segmentTimeInput"
-                class="form-control"
-                type="number"
-                min="1"
-                max="9"
-                step="1"
-              />
-            </div>
-          </div>
-          <div class="col col-4">
-            <div class="container w-100 p-2">
-              <label>Execution method</label>
-              <select
-                id="executionMethodInput"
-                class="form-select"
-                id="priority"
-                required
-              >
-                <option value="priority">Priority</option>
-                <option value="littles">Little's Law</option>
-                <option selected value="markov">Markov chain</option>
-              </select>
-            </div>
-          </div>
-        </div> -->
         <div class="row p-2">
           <div class="col col-6">
             Total number of tasks: <span id="numberOfTasks"></span>
@@ -210,6 +165,15 @@
     <div
       class="container mt-5 bg-body-tertiary border-black border rounded-3 p-5 w-50"
     >
+      <span>Here we can view the valuated queue and execute the queue.</span>
+      <span
+        >Press the
+        <code class="btn disabled btn-outline-warning btn-sm"
+          >Execute queue</code
+        >
+        button to execute the queue. While executing, the button will be
+        disabled.
+      </span>
       <h2>Valuated queue</h2>
       <hr />
       <div class="accordion" id="valuatedQueueAccordion">
