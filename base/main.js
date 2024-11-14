@@ -44,7 +44,7 @@ pushToQueueButton.addEventListener("click", (event) => {
   )
     ? ""
     : queueOverviewTasks.innerHTML;
-  queueOverviewTasks.innerHTML += taskElement(task, false);
+  queueOverviewTasks.innerHTML += taskElement(task, false, false);
   clearValues(taskDisplayName, taskSegments);
   refreshQueueInfo(tasks, segmentTime ?? 1);
 });
@@ -89,13 +89,14 @@ const sortTasks = (tasks, method) => {
 // Process: Add bulk tasks to queue
 const addBulkTasksElement = async (tasks) => {
   const executeQueueButton = document.getElementById("executeQueueButton");
+
   executeQueueButton.innerHTML = "Valuating";
   executeQueueButton.disabled = true;
 
   queueValuatedTasks.innerHTML = "";
   for (const task of tasks) {
     attachFlag(task, status.Idle);
-    queueValuatedTasks.innerHTML += taskElement(task, true);
+    queueValuatedTasks.innerHTML += taskElement(task, true, false);
     if (tasks.indexOf(task) !== tasks.length - 1) {
       await new Promise((resolve) => setTimeout(resolve, 100 * task.segments));
     }
@@ -104,3 +105,58 @@ const addBulkTasksElement = async (tasks) => {
   executeQueueButton.innerHTML = "Execute";
   executeQueueButton.disabled = false;
 };
+
+// Process: Execute tasks
+const executeQueueButton = document.getElementById("executeQueueButton");
+executeQueueButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  executeQueueButtonState(true);
+
+  if (queue.tasks.length == 0) {
+    return;
+  }
+
+  let valuatedTasks = [
+    ...document.getElementById("queueValuatedTasks").children,
+  ];
+  valuatedTasks.forEach((row) => {
+    if (row.children != null) {
+      row.children[3].innerHTML = '<span class="loader"></span>';
+    }
+  });
+
+  (async () => {
+    for (const task of queue.tasks) {
+      attachFlag(task, status.Processing);
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          updateFlag(task, valuatedTasks);
+          attachFlag(task, status.Completed);
+          resolve();
+        }, task.segments * segmentTime);
+      });
+    }
+
+    executeQueueButtonState(false);
+  })();
+});
+
+// Process: Update flag
+function updateFlag(task, valuatedTasks) {
+  valuatedTasks.forEach((row) => {
+    if (row.children != null) {
+      if (row.children[0].innerHTML == task.displayName) {
+        row.children[3].innerHTML =
+          '<i class="fa-solid fa-circle-check text-success"></i>';
+      }
+    }
+  });
+}
+
+// Process: Execute queue button state change
+function executeQueueButtonState(executing) {
+  executeQueueButton.disabled = executing;
+  executeQueueButton.classList.toggle("btn-warning", executing);
+  executeQueueButton.classList.toggle("btn-outline-warning", !executing);
+  executeQueueButton.innerHTML = executing ? "Executing..." : "Execute";
+}

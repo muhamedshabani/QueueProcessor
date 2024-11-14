@@ -7,7 +7,7 @@ export const executionMethods = Object.freeze({
 const config = {
   executionMethod: executionMethods.PRIORITY,
   valuationAllowance: 20,
-  segmentTime: 1,
+  segmentTime: 100,
   roundRobinSegments: 4,
 };
 
