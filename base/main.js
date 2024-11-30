@@ -4,12 +4,11 @@ import Task from "../models/task.js";
 import { generateGUID } from "../utils/guidGenerator.js";
 import { clearValues } from "../utils/clearValues.js";
 import { taskElement } from "../utils/taskElement.js";
-import { valuate, valuateAllowance } from "../base/dispatchers/valuation.js";
 import { refreshQueueInfo } from "../utils/refreshQueueInfo.js";
 import { settings } from "../base/settings.js";
-import { executionMethods } from "../base/settings.js";
 import { attachFlag } from "../base/dispatchers/flagging.js";
 import { status } from "../models/enums/status.js";
+import { sortTasks } from "../base/dispatchers/sortTasks.js";
 //#endregion
 
 //#region: Initial state
@@ -17,8 +16,16 @@ var tasks = [];
 const segmentTime = settings.segmentTime;
 const queueOverviewTasks = document.getElementById("queueOverviewTasks");
 const queueValuatedTasks = document.getElementById("queueValuatedTasks");
+
 const executionMethod = settings.executionMethod;
 document.getElementById("currentAlgorithm").innerHTML = executionMethod;
+
+const priorityOptions = document.getElementById("priority");
+priorityOptions.toggleAttribute("disabled", executionMethod != "Priority");
+if (executionMethod != "Priority") {
+  priorityOptions.innerText = "N/A";
+}
+
 var queue = new Queue();
 //#endregion
 
@@ -26,17 +33,16 @@ var queue = new Queue();
 const pushToQueueButton = document.getElementById("pushToQueueButton");
 pushToQueueButton.addEventListener("click", (event) => {
   event.preventDefault();
-  console.log("Pushing to queue");
   let guid = generateGUID();
   let taskDisplayName = document.getElementById("displayName");
   let taskSegments = document.getElementById("segments");
-  let taskPriority = document.getElementById("priority");
+  let taskPriority = document.getElementById("priority").value;
 
   let task = new Task();
   task.id = guid;
   task.displayName = taskDisplayName.value;
   task.segments = +taskSegments.value > 0 ? +taskSegments.value : 1;
-  task.priority = taskPriority.value;
+  task.priority = taskPriority;
   tasks.push(task);
 
   queueOverviewTasks.innerHTML = queueOverviewTasks.innerHTML.includes(
@@ -68,23 +74,12 @@ valuateQueueButton.addEventListener("click", (event) => {
     return;
   }
 
-  sortTasks(tasks, executionMethod);
+  tasks = sortTasks(tasks, executionMethod);
 
   queue.clearTasks();
   queue.addBulkTasks(tasks);
   addBulkTasksElement(queue.tasks);
 });
-
-// Process: Sort tasks by execution method
-const sortTasks = (tasks, method) => {
-  if (method == executionMethods.PRIORITY) {
-    tasks.sort((a, b) => valuate(a, b));
-  } else if (method == executionMethods.ALLOWANCE) {
-    tasks.sort((a, b) => valuateAllowance(a, b, settings.valuationAllowance));
-  } else {
-    return;
-  }
-};
 
 // Process: Add bulk tasks to queue
 const addBulkTasksElement = async (tasks) => {
@@ -98,7 +93,7 @@ const addBulkTasksElement = async (tasks) => {
     attachFlag(task, status.Idle);
     queueValuatedTasks.innerHTML += taskElement(task, true, false);
     if (tasks.indexOf(task) !== tasks.length - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 100 * task.segments));
+      await new Promise((resolve) => setTimeout(resolve, 250 * task.segments));
     }
   }
 

@@ -1,6 +1,7 @@
 export const executionMethods = Object.freeze({
   FCFS: "FCFS",
   PRIORITY: "Priority",
+  SPRIORITY: "S-Priority",
   ALLOWANCE: "Allowance",
 });
 
