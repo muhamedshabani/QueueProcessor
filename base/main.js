@@ -9,10 +9,12 @@ import { settings } from "../base/settings.js";
 import { attachFlag } from "../base/dispatchers/flagging.js";
 import { status } from "../models/enums/status.js";
 import { sortTasks } from "../base/dispatchers/sortTasks.js";
+import { priority } from "../models/enums/priority.js";
 //#endregion
 
 //#region: Initial state
 var tasks = [];
+
 const segmentTime = settings.segmentTime;
 const queueOverviewTasks = document.getElementById("queueOverviewTasks");
 const queueValuatedTasks = document.getElementById("queueValuatedTasks");
@@ -36,13 +38,13 @@ pushToQueueButton.addEventListener("click", (event) => {
   let guid = generateGUID();
   let taskDisplayName = document.getElementById("displayName");
   let taskSegments = document.getElementById("segments");
-  let taskPriority = document.getElementById("priority").value;
+  let taskPriority = document.getElementById("priority");
 
   let task = new Task();
   task.id = guid;
   task.displayName = taskDisplayName.value;
   task.segments = +taskSegments.value > 0 ? +taskSegments.value : 1;
-  task.priority = taskPriority;
+  task.priority = taskPriority.value;
   tasks.push(task);
 
   queueOverviewTasks.innerHTML = queueOverviewTasks.innerHTML.includes(
@@ -55,13 +57,37 @@ pushToQueueButton.addEventListener("click", (event) => {
   refreshQueueInfo(tasks, segmentTime ?? 1);
 });
 
+// Process: Generate random values
+const randomizeValuesButton = document.getElementById("randomizeValuesButton");
+randomizeValuesButton.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  let taskDisplayName = document.getElementById("displayName");
+  let taskSegments = document.getElementById("segments");
+  let taskPriority = document.getElementById("priority");
+
+  taskDisplayName.value = "Task " + Math.floor(Math.random() * 100);
+  taskSegments.value = Math.floor(Math.random() * 10) + 1;
+  taskPriority.value =
+    settings.executionMethod == "Priority" ||
+    settings.executionMethod == "S-Priority"
+      ? Object.values(priority)[
+          Math.floor(Math.random() * Object.values(priority).length)
+        ]
+      : 1;
+});
+
 // Process: Queue clearing
 const clearQueueButton = document.getElementById("clearQueueButton");
 clearQueueButton.addEventListener("click", (event) => {
   event.preventDefault();
-  console.log("Clearing queue");
+
   tasks = [];
-  queueOverviewTasks.innerHTML = "No tasks in queue";
+  queueOverviewTasks.innerHTML = `<tr>
+        <td class="text-center" colspan="3">
+          No tasks in queue yet!
+        </td>
+      </tr>`;
   refreshQueueInfo(tasks, segmentTime ?? 1);
 });
 
