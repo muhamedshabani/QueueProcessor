@@ -9,7 +9,6 @@ import { settings } from "../base/settings.js";
 import { attachFlag } from "../base/dispatchers/flagging.js";
 import { status } from "../models/enums/status.js";
 import { sortTasks } from "../base/dispatchers/sortTasks.js";
-import { priority } from "../models/enums/priority.js";
 //#endregion
 
 //#region: Initial state
@@ -23,7 +22,10 @@ const executionMethod = settings.executionMethod;
 document.getElementById("currentAlgorithm").innerHTML = executionMethod;
 
 const priorityOptions = document.getElementById("priority");
-priorityOptions.toggleAttribute("disabled", executionMethod != "Priority");
+priorityOptions.toggleAttribute(
+  "disabled",
+  executionMethod != "Priority" && executionMethod != "S-Priority"
+);
 if (executionMethod != "Priority") {
   priorityOptions.innerText = "N/A";
 }
@@ -68,13 +70,12 @@ randomizeValuesButton.addEventListener("click", (event) => {
 
   taskDisplayName.value = "Task " + Math.floor(Math.random() * 100);
   taskSegments.value = Math.floor(Math.random() * 10) + 1;
-  taskPriority.value =
-    settings.executionMethod == "Priority" ||
-    settings.executionMethod == "S-Priority"
-      ? Object.values(priority)[
-          Math.floor(Math.random() * Object.values(priority).length)
-        ]
-      : 1;
+
+  if (executionMethod == "Priority" || executionMethod == "S-Priority") {
+    let options = taskPriority.children;
+    let randInt = Math.floor(Math.random() * options.length);
+    options[randInt].selected = true;
+  }
 });
 
 // Process: Queue clearing
@@ -88,6 +89,9 @@ clearQueueButton.addEventListener("click", (event) => {
           No tasks in queue yet!
         </td>
       </tr>`;
+
+  queueValuatedTasks.innerHTML = `<tr>
+      <td class="text-center" colspan="5">Queue not valuated yet!</td></tr>`;
   refreshQueueInfo(tasks, segmentTime ?? 1);
 });
 
