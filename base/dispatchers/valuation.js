@@ -5,8 +5,13 @@ export function valuate(current, next) {
   return priorities[next.priority] - priorities[current.priority];
 }
 
-// This function is used to valuate tasks based on their number of segments
+// This function is used to valuate tasks based on their priority and number of segments
 export function valuateSPriority(current, next) {
+  const priorityDifference =
+    priorities[next.priority] - priorities[current.priority];
+  if (priorityDifference !== 0) {
+    return priorityDifference;
+  }
   return next.segments - current.segments;
 }
 

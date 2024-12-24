@@ -3,12 +3,16 @@ import Queue from "../models/queue.js";
 import Task from "../models/task.js";
 import { generateGUID } from "../utils/guidGenerator.js";
 import { clearValues } from "../utils/clearValues.js";
-import { taskElement } from "../utils/taskElement.js";
+import { taskElement } from "../models/components/taskElement.js";
 import { refreshQueueInfo } from "../utils/refreshQueueInfo.js";
 import { settings } from "../base/settings.js";
 import { attachFlag } from "../base/dispatchers/flagging.js";
 import { status } from "../models/enums/status.js";
 import { sortTasks } from "../base/dispatchers/sortTasks.js";
+import {
+  noTasksInQueueYet,
+  queueNotValuatedYet,
+} from "../models/components/emptyQueuePlaceholder.js";
 //#endregion
 
 //#region: Initial state
@@ -26,9 +30,6 @@ priorityOptions.toggleAttribute(
   "disabled",
   executionMethod != "Priority" && executionMethod != "S-Priority"
 );
-if (executionMethod != "Priority") {
-  priorityOptions.innerText = "N/A";
-}
 
 var queue = new Queue();
 //#endregion
@@ -84,14 +85,10 @@ clearQueueButton.addEventListener("click", (event) => {
   event.preventDefault();
 
   tasks = [];
-  queueOverviewTasks.innerHTML = `<tr>
-        <td class="text-center" colspan="3">
-          No tasks in queue yet!
-        </td>
-      </tr>`;
 
-  queueValuatedTasks.innerHTML = `<tr>
-      <td class="text-center" colspan="5">Queue not valuated yet!</td></tr>`;
+  queueOverviewTasks.innerHTML = noTasksInQueueYet;
+  queueValuatedTasks.innerHTML = queueNotValuatedYet;
+
   refreshQueueInfo(tasks, segmentTime ?? 1);
 });
 
