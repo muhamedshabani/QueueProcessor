@@ -1,7 +1,9 @@
 export const priority = Object.freeze({
-  High: 3,
-  Medium: 2,
-  Low: 1,
+  VeryHigh: 5,
+  High: 4,
+  Medium: 3,
+  Low: 2,
+  VeryLow: 1,
 });
 
 export { priority as priorities };

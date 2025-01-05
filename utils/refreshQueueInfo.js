@@ -16,17 +16,15 @@ export function refreshQueueInfo(tasks, segmentTime) {
     0
   );
   const estimatedExecutionTime = totalNumberOfSegments * segmentTime;
-  const medianSegmentsPerTask = calculateMedian(
-    tasks.map((task) => +task.segments)
-  );
+  const medianSegmentsPerTask = calculateAverageWaitingTime(tasks);
 
-  console.log(numberOfTasks);
   numberOfTasksElement.innerHTML = numberOfTasks;
   estimatedExecutionTimeElement.innerHTML = estimatedExecutionTime;
   totalNumberOfSegmentsElement.innerHTML = totalNumberOfSegments;
   medianSegmentsPerTaskElement.innerHTML = medianSegmentsPerTask;
 }
 
+// DEPRECATED
 function calculateMedian(numbers) {
   numbers.sort((a, b) => a - b);
   const middle = Math.floor(numbers.length / 2);
@@ -36,4 +34,19 @@ function calculateMedian(numbers) {
   } else {
     return numbers[middle];
   }
+}
+
+function calculateAverageWaitingTime(tasks) {
+  if (tasks.length === 0) return 0;
+
+  let totalWaitingTime = 0;
+  let currentWaitingTime = 0;
+
+  for (let i = 0; i < tasks.length; i++) {
+    tasks[i].waitingTime = currentWaitingTime;
+    totalWaitingTime += currentWaitingTime;
+    currentWaitingTime += tasks[i].segments;
+  }
+
+  return totalWaitingTime / tasks.length;
 }

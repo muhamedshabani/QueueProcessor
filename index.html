@@ -70,9 +70,11 @@
           <div class="mb-3 col col-6">
             <label class="form-label">Priority</label>
             <select class="form-select" id="priority" required>
+              <option value="VeryHigh">Very high</option>
               <option value="High">High</option>
               <option value="Medium">Medium</option>
-              <option selected value="Low">Low</option>
+              <option value="Low">Low</option>
+              <option selected value="VeryLow">Very low</option>
             </select>
           </div>
         </div>
@@ -113,7 +115,8 @@
             Total number of segments: <span id="totalNumberOfSegments"></span>
           </div>
           <div class="col col-6">
-            Median segments per task: <span id="medianSegmentsPerTask"></span>
+            Average waiting time per task:
+            <span id="medianSegmentsPerTask"></span>
           </div>
         </div>
       </div>
